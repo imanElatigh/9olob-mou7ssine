@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import PermissionsMixin
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
@@ -15,30 +15,30 @@ class AssociationUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_staff', True)
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self.create_user(email, password, **extra_fields)
 
-class AssociationUser(AbstractBaseUser):
-    email = models.EmailField(unique=True)
-    nom = models.CharField(max_length=255)
-    information = models.TextField()
-    adresse = models.CharField(max_length=255)
-    tel = models.CharField(max_length=20)
-    numeroLicence = models.CharField(max_length=100)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+
+
+class AssociationUser(AbstractBaseUser,PermissionsMixin):
+    email = models.EmailField(blank=True,null=True)
+    nom = models.CharField(max_length=255,blank=True,null=True)
+    information = models.TextField(blank=True,null=True)
+    adresse = models.CharField(max_length=255,blank=True,null=True)
+    tel = models.CharField(max_length=20,blank=True,null=True)
+    numeroLicence = models.CharField(max_length=100,blank=True,null=True)
+    is_active = models.BooleanField(default=True,blank=True,null=True)
+    is_staff = models.BooleanField(default=False,blank=True,null=True)
 
     objects = AssociationUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['nom', 'adresse', 'tel', 'numeroLicence']
+    REQUIRED_FIELDS = ['nom', 'adresse', 'tel','numeroLicence']
 
     def __str__(self):
         return self.email
@@ -48,8 +48,8 @@ class UserAssiocitionProfile(models.Model):
         return str(self.user)
 
 class License(models.Model):
-    name = models.CharField(max_length=255)
-    license_number = models.CharField(max_length=100)
+    name = models.CharField(max_length=255,blank=True,null=True)
+    license_number = models.CharField(max_length=100,blank=True,null=True)
 
     def __str__(self):
         return f"{self.name} - {self.license_number}"

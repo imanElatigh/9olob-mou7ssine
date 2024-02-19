@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'asso.apps.AssoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'asso'
 ]
 
 MIDDLEWARE = [
@@ -69,21 +69,29 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'assoPro.wsgi.application'
-
+AUTH_USER_MODEL = 'asso.AssociationUser'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'asso1',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'asso1',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 
 # Password validation
@@ -145,9 +153,6 @@ AUTHENTICATION_BACKENDS = [
     'asso.backends.EmailAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-
-
 
 
 LOGIN_URL = '/login/'  # L'URL de votre page de connexion
