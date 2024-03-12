@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'asso.apps.AssoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'asso'
 ]
 
 MIDDLEWARE = [
@@ -69,18 +69,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'assoPro.wsgi.application'
-AUTH_USER_MODEL = 'asso.AssociationUser'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 # DATABASES = {
 #     'default': {
@@ -92,7 +84,12 @@ DATABASES = {
 #         'PORT': '',
 #     }
 # }
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -125,18 +122,21 @@ USE_I18N = True
 USE_TZ = True
 
 
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_URL = 'images/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_ROOT = BASE_DIR / 'images'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -155,8 +155,17 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
+
+
+
+
+
+
+
 LOGIN_URL = '/login/'  # L'URL de votre page de connexion
-LOGIN_REDIRECT_URL = 'home/'  # L'URL où vous voulez rediriger l'utilisateur après la connexion
+LOGIN_REDIRECT_URL = '/profile/'  # L'URL où vous voulez rediriger l'utilisateur après la connexion
+
+
 
 
 

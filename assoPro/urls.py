@@ -16,15 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.contrib.auth.decorators import login_required
-from asso import views  # Import your views
+from asso import views  
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('sign-up/', views.sign_up, name='sign-up'),  # URL for sign-up view
-    path('login/', views.login, name='login'),  # URL for login view
     path('',include('asso.urls')),
-    # path('', login_required(views.home_view), name='home'),
-    path('profile/', views.profile, name='profile'),
-    path('index/', views.index, name='index'),
-    # Add more URLs for other views if needed
+    
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

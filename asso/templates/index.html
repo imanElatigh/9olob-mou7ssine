@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en-US" dir="ltr">
+<html lang="ar" dir="rtl">
 
   <head>
     <meta charset="utf-8">
@@ -32,6 +32,9 @@
     <!-- ===============================================-->
     <link href="{% static 'assets/css/theme.css' %}" rel="stylesheet" />
   <style>
+
+    
+    
 .circle-background {
     position: relative;
     background: linear-gradient(to bottom right, rgba(168, 143, 96, 0.253), rgba(255, 165, 0, 0.1)); /* Orange gradient from top left to bottom right */
@@ -47,7 +50,13 @@
     clip-path: polygon(0% 100%, 100% 100%, 100% 70%, 50% 0%, 0% 70%); /* Create a semi-circle shape using clip-path */
 }
 
+  body a:hover {
+    color: #000;
+  }
 
+  .nav-link a:hover {
+    color: #000;
+  }
 
   </style>
     
@@ -64,8 +73,8 @@
     <main class="main" id="top" dir="rtl">
       <nav class="navbar navbar-expand-lg navbar-light sticky-top" data-navbar-on-scroll="data-navbar-on-scroll">
           <div class="container">
-              <a class="navbar-brand" href="index.html">
-                  <img src="{% static 'assets/img/logo1.png' %}" height="90" alt="logo">
+              <a class="navbar-brand" href="/">
+                  <img src="{% static 'assets/img/logok.png' %}" height="90" alt="logo">
               </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -73,7 +82,7 @@
               <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
                   <ul class="navbar-nav me-auto">
                       <li class="nav-item">
-                          <a class="nav-link" aria-current="page" href="#info">تعريف</a>
+                          <a class="nav-link"  aria-current="page" href="#info">تعريف</a>
                       </li>
                       <li class="nav-item">
                           <a class="nav-link" aria-current="page" href="#asso">الجمعيات</a>
@@ -88,7 +97,7 @@
                   <div class="d-flex ms-lg-4">
                     <!-- style=" border-color: #ec7311; color: #ec7311 ;" -->
                     <a class="btn btn-secondary-outline" href="/login" >تسجيل الدخول</a>
-                    <a class="btn btn-warning" href="/sign-up" style="margin-right: 10px; background-color: #ec7311; border-color: #ec7311;">التسجيل</a>
+                    <a class="btn btn-warning" href="/sign-up" style="margin-right: 10px; background-color: #b84343; border-color: #b84343;">التسجيل</a>
 
                 </div>
                 
@@ -110,7 +119,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <img class="pt-7 pt-md-0 img-fluid" src="{% static 'assets/img/logo1.png' %}" alt="">
+                    <img class="pt-7 pt-md-0 img-fluid" src="{% static 'assets/img/logok.png' %}" alt="">
                 </div>
             </div>
         </div>
@@ -153,7 +162,7 @@
                       <p class="mb-0 fw-medium text-secondary">يتيح التطبيق دردشة آلية تجيب عن جميع اسئلة و استفسارات المستخدمين </p>
                   </div>
               </div>
-              <div class="text-center"><a class="btn btn-warning" href="#!" role="button" style=" border-color: white; background-color: #ec7311; color: white; ">سجل الآن</a></div>
+              <div class="text-center"><a class="btn btn-warning" href="/sign-up" role="button" style=" border-color: white; background-color:  #b84343; color: white; ">سجل الآن</a></div>
           </div><!-- end of .container-->
       </section>
       
@@ -170,19 +179,26 @@
             <h1 class="fw-bold fs-6 mb-4"></h1>
             <p class="mb-5 text-secondary"></p>
             <div class="row gx-4">
-                <div class="row gx-4">
-                    {% for user in association_users %}
-                    <div class="col-md-4 mb-4">
+              <div class="row gx-4">
+                {% for user in association_users %}
+                <div class="col-md-4 mb-4">
+                    <a href="{% url 'association_user_detail' user.id %}"  style="text-decoration: none;"  class="card-link">
                         <div class="card border-0 shadow-sm">
-                            <img class="card-img-top" src="{% static 'assets/img/marketing/marketing01.png' %}" alt="صورة التسويق 1">
+                            {% if user.profile_image %}
+                            <img class="card-img-top" src="{{ user.profile_image.url }}" alt="Profile Image" style="width: 335px; height: 200px;">
+                            {% else %}
+                            <p>No profile image uploaded</p>
+                            {% endif %}
                             <div class="card-body">
-                                <p class="card-text " style="color: #000; font-size: 25px; ">{{ user.nom }}</p>
-                                <p class="card-text text-secondary">{{ user.information }}</p>
+                                <p class="card-text" style="color: #000; font-size: 25px;">{{ user.nom }}</p>
+                                <p class="card-text text-secondary"></p>
                             </div>
                         </div>
-                    </div>
-                    {% endfor %}
+                    </a>
                 </div>
+                {% endfor %}
+            </div>
+            
             </div>
         </div><!-- end of .container-->
     </section>
@@ -204,21 +220,30 @@
               <h1 class="fw-bold fs-6 mb-3">أحدث المنشورات</h1>
               <p class="mb-6 text-secondary"></p>
               <div class="row">
-                  
-                 
-                  <div class="col-md-4 mb-4">
-                      <div class="card"><img class="card-img-top" src="{% static 'assets/img/marketing/marketing03.png' %}" alt="" />
-                          <div class="card-body ps-0">
-                              <p class="text-secondary">بواسطة <a class="fw-bold text-decoration-none me-1" href="#">عبدالله</a>|<span class="ms-1">03 مارس 2019</span></p>
-                              <h3 class="fw-bold">خطوات النجاح لحياتك الشخصية أو العملية</h3>
-                          </div>
-                      </div>
-                  </div>
-                  
-              </div>
-              
+                {% for association_user in association_users %}
+                    {% for post in association_user.post_set.all %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                {% if post.image %}
+                                    <img style="width: 230px; height: 220px;" class="card-img-top" src="{{ post.image.url }}" alt="{{ post.title }}">
+                                {% else %}
+                                    <!-- If no image is available -->
+                                    <img class="card-img-top" src="{% static 'placeholder_image.jpg' %}" alt="Placeholder Image">
+                                {% endif %}
+                                <div class="card-body ps-0">
+                                    <p style="font-size: 12px;" class="text-secondary">بواسطة <a class="fw-bold text-decoration-none me-1" href="{% url 'association_detail' association_id=post.association.id %}">{{ post.association.nom }}</a> | <span class="ms-1">{{ post.created_at|date:"d/m/Y" }}</span></p>
+                                    <h6 class="fw-bold">{{ post.title }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            
           </div><!-- end of .container-->
       </section>
+      
+      
       
       <!-- <section> close ============================-->
       <!-- ============================================-->
@@ -232,16 +257,16 @@
 
         <section class="py-md-11 py-8" id="chatbot">
 
-          <div class="bg-holder z-index--1 bottom-0 d-none d-lg-block background-position-top" style="background-image:url({% static 'assets/img/superhero/oval.png' %} ); opacity:.5 ; background-position: top !important ;">
-          </div>
+
+
           <!--/.bg-holder-->
   
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-lg-6 text-center">
                 <h1 class="fw-bold mb-4 fs-7">عندك استفسارات ؟</h1>
-                <p class="mb-5 text-info fw-medium">يمكنك التواصل مع الدردشة الألية </p>
-                <button class="btn btn-warning btn-md">هنا</button>
+                <p class="mb-5 text-info fw-medium">يمكنك التواصل مع الدردشة الآلية </p>
+                <button class="btn btn-warning btn-md" style="background-color: #b84343 ; border: #b84343;">هنا</button>
               </div>
             </div>
           </div><!-- end of .container-->
@@ -262,7 +287,7 @@
           <div class="container border-top py-3">
             <div class="row justify-content-between">
               <div class="col-12 col-md-auto mb-1 mb-md-0">
-                <p class="mb-0">&copy; 2024 MIAG ISCAE </p>
+                <p class="mb-0"> 2024 MIAG ISCAE &copy; </p>
               </div>
               <div class="col-12 col-md-auto">
                 <p class="mb-0">
@@ -283,14 +308,7 @@
     <!-- ===============================================-->
 
 
-    <div class="modal fade" id="popupVideo" tabindex="-1" aria-labelledby="popupVideo" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <iframe class="rounded" style="width:100%;height:500px;" src="https://www.youtube.com/embed/_lhdhL4UDIo" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-
+    
 
     <!-- ===============================================-->
     <!--    JavaScripts-->
